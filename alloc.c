@@ -8,24 +8,12 @@
 
 #define PAGE_TABLE_SIZE PAGESIZE / MINALLOC
 
-int fd;
 char *map_addr;
 int page_table[PAGE_TABLE_SIZE];
 
 int init_alloc() {
-	fd = open("mmap_file", O_RDWR | O_CREAT, 0644);
-	if (fd < 0) {
-		fprintf(stderr, "mmap_file 생성 오류\n");
-		return -1;
-	}
-
-	if (ftruncate(fd, PAGESIZE) < 0) {
-		fprintf(stderr, "ftruncate error\n");
-		return -3;
-	}
-
 	map_addr = (char*) mmap((void*) 0, PAGESIZE, PROT_READ | PROT_WRITE,
-			MAP_SHARED, fd, 0);
+			MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 
 	if (map_addr == (void *) -1) {
 		fprintf(stderr, "mmap 오류\n");

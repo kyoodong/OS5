@@ -1,0 +1,62 @@
+#include "ealloc.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <string.h>
+
+#define PAGE_NUM 4
+#define PAGE_TABLE_SIZE = PAGESIZE / MINALLOC
+
+struct page {
+	int page_table[PAGE_TABLE_SIZE];
+	char *mem;
+}
+
+int fd;
+struct page pages[PAGE_NUM];
+int cur_page_size;
+
+int get_offset(struct page *p, int bufsiz) {
+	for (int i = 0; i < PAGE_TABLE_SIZE; i++) {
+		if (p->page_table[i] != -1) {
+			
+		}
+	}
+}
+
+void init_alloc() {
+	for (int i = 0; i < PAGE_NUM; i++) {
+		memset(pages[i].page_table, 1, PAGE_TABLE_SIZE);
+		printf("%d\n", pages[i].page_table[0]);
+		pages[i].mem = NULL;
+	}
+}
+
+char *alloc(int bufsiz) {
+	if (bufsiz % MINALLOC != 0) {
+		fprintf(stderr, "%d 배수가 아님\n", MINALLOC);
+		return NULL;
+	}
+
+	if (bufsiz > 4096) {
+		fprintf(stderr, "4096 넘음\n");
+		return NULL;
+	}
+	
+	int page_index = -1;
+	for (int i = 0 ; i < cur_page_size; i++) {
+		if (
+	}
+}
+
+void dealloc(char *a) {
+
+}
+
+void cleanup() {
+	for (int i = 0; i < PAGE_NUM; i++) {
+		memset(pages[i].page_table, 1, PAGE_TABLE_SIZE);
+		pages[i].mem = NULL;
+	}
+}
